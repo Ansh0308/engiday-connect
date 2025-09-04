@@ -8,35 +8,48 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Engineer's Day Theme Colors */
+    --background: 220 20% 98%;
+    --foreground: 220 20% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 220 20% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 220 20% 10%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* ICT Department Theme - Blue & Orange */
+    --primary: 210 90% 45%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 210 85% 60%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 30 95% 55%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 220 15% 95%;
+    --muted-foreground: 220 10% 55%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 210 85% 92%;
+    --accent-foreground: 210 90% 45%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 15% 90%;
+    --input: 220 15% 95%;
+    --ring: 210 90% 45%;
 
-    --radius: 0.5rem;
+    /* Engineer's Day Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(210 90% 45%), hsl(210 85% 60%));
+    --gradient-secondary: linear-gradient(135deg, hsl(30 95% 55%), hsl(35 90% 65%));
+    --gradient-hero: linear-gradient(135deg, hsl(210 95% 35%), hsl(210 85% 55%), hsl(30 95% 55%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100% / 0.8), hsl(220 15% 98% / 0.9));
+
+    /* Shadows */
+    --shadow-glow: 0 0 30px hsl(210 90% 45% / 0.3);
+    --shadow-card: 0 10px 30px -10px hsl(210 90% 45% / 0.1);
+
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
