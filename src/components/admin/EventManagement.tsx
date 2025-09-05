@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 import { Badge } from '@/components/ui/badge'
 import { useToast } from '@/hooks/use-toast'
 import { supabase } from '@/integrations/supabase/client'
@@ -242,6 +242,9 @@ const EventManagement = ({ events, onEventsUpdate }: EventManagementProps) => {
             <DialogTitle>
               {editingEvent ? 'Edit Event' : 'Create New Event'}
             </DialogTitle>
+            <DialogDescription>
+              Provide the event details and team size requirements.
+            </DialogDescription>
           </DialogHeader>
 
           <form onSubmit={handleSubmit} className="space-y-6">
