@@ -66,8 +66,8 @@ const HeroSection = () => {
             className="flex flex-wrap justify-center gap-8 mt-12"
           >
             {[
-              { icon: FiCalendar, label: 'Multiple Events', value: '8+' },
-              { icon: FiUsers, label: 'ICT Clubs', value: '6+' },
+              { icon: FiCalendar, label: 'Multiple Events', value: '6+' },
+              { icon: FiUsers, label: 'ICT Clubs', value: '4' },
               { icon: FiAward, label: 'Exciting Prizes', value: '∞' },
             ].map((stat, index) => (
               <motion.div

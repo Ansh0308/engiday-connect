@@ -14,7 +14,7 @@ const Footer = () => {
         >
           {/* Main Footer Content */}
           <div className="space-y-4">
-            <h3 className="text-2xl font-bold">Engineer's Day 2024</h3>
+            <h3 className="text-2xl font-bold">Engineer's Day 2025</h3>
             <p className="text-primary-foreground/80 max-w-2xl mx-auto">
               Celebrating innovation, creativity, and technological excellence at the 
               ICT Department, Marwadi University. Join us in shaping the future of engineering.
@@ -41,7 +41,7 @@ const Footer = () => {
           {/* Copyright */}
           <div className="pt-6 border-t border-primary-foreground/20">
             <p className="text-primary-foreground/60 text-sm">
-              © 2024 ICT Department, Marwadi University. All rights reserved.
+              © 2025 ICT Department, Marwadi University. All rights reserved.
             </p>
           </div>
         </motion.div>
