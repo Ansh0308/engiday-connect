@@ -27,14 +27,9 @@ const Footer = () => {
           {/* Credits */}
           <div className="flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-6 text-sm text-primary-foreground/80">
             <div className="flex items-center space-x-2">
-              <span>Made with</span>
-              <FiHeart className="w-4 h-4 text-red-400 animate-pulse" />
-              <span>for Engineer's Day</span>
             </div>
             <div className="hidden md:block w-1 h-1 bg-primary-foreground/40 rounded-full" />
             <div className="flex items-center space-x-2">
-              <FiCode className="w-4 h-4" />
-              <span>ICT Department, Marwadi University</span>
             </div>
           </div>
 

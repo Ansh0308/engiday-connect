@@ -1,35 +1,16 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useNavigate } from "react-router-dom"
 import { Card, CardContent } from "@/components/ui/card"
+import { clubsData } from "@/data/clubsData"
 
 const AboutSection = () => {
-  const clubs = [
-    {
-      name: "Competitive Programming Club",
-      description: "Master algorithms, data structures, and problem-solving skills",
-      logo: "/images/CPclub.png",
-      color: "from-blue-500 to-blue-600",
-    },
-    {
-      name: "Circuitology Club",
-      description: "Explore hardware, circuits, and embedded systems",
-      logo: "/images/circuitologyclub.png",
-      color: "from-green-500 to-green-600",
-    },
-    {
-      name: "Data Science Club",
-      description: "Dive into AI, ML, and data analytics",
-      logo: "/images/datascienceclub.png",
-      color: "from-purple-500 to-purple-600",
-    },
-    {
-      name: "Cloud Computing and DevOps Club",
-      description: "Learn cybersecurity and network technologies",
-      logo: "/images/ccdcClub.jpeg",
-      color: "from-red-500 to-red-600",
-    },
-  ]
+  const navigate = useNavigate()
+
+  const handleClubClick = (clubId: string) => {
+    navigate(`/clubs/${clubId}`)
+  }
 
   return (
     <section id="about" className="py-20 bg-background">
@@ -57,39 +38,38 @@ const AboutSection = () => {
 
         {/* ICT Clubs Grid */}
         <div className="grid grid-cols-2 gap-6 mb-16 max-w-4xl mx-auto">
-          {clubs.map((club, index) => {
-            const Icon = club.icon
-            return (
-              <motion.div
-                key={club.name}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -8 }}
-              >
-                <Card className="h-full bg-gradient-card backdrop-blur-sm border border-border/50 hover:shadow-lg transition-all duration-300">
-                  <CardContent className="p-6 text-center space-y-4">
-                    <div
-                      className={`w-16 h-16 mx-auto rounded-xl bg-gradient-to-br ${club.color} flex items-center justify-center mb-4`}
-                    >
-                      {club.logo ? (
-                        <img
-                          src={club.logo || "/placeholder.svg"}
-                          alt={`${club.name} logo`}
-                          className="w-12 h-12 object-contain"
-                        />
-                      ) : (
-                        Icon && <Icon className="w-8 h-8 text-white" />
-                      )}
-                    </div>
-                    <h3 className="text-xl font-semibold text-card-foreground">{club.name}</h3>
-                    <p className="text-muted-foreground">{club.description}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            )
-          })}
+          {clubsData.map((club, index) => (
+            <motion.div
+              key={club.id}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              whileHover={{ y: -8, scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => handleClubClick(club.id)}
+              className="cursor-pointer"
+            >
+              <Card className="h-full bg-gradient-card backdrop-blur-sm border border-border/50 hover:shadow-lg hover:border-primary/20 transition-all duration-300">
+                <CardContent className="p-6 text-center space-y-4">
+                  <div
+                    className={`w-16 h-16 mx-auto rounded-xl bg-gradient-to-br ${club.color} flex items-center justify-center mb-4`}
+                  >
+                    <img
+                      src={club.logo || "/placeholder.svg"}
+                      alt={`${club.name} logo`}
+                      className="w-12 h-12 object-contain"
+                    />
+                  </div>
+                  <h3 className="text-xl font-semibold text-card-foreground group-hover:text-primary transition-colors">
+                    {club.name}
+                  </h3>
+                  <p className="text-muted-foreground">{club.description}</p>
+                  <div className="text-xs text-primary/60 font-medium">Click to learn more →</div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
         </div>
 
         {/* Department Stats */}
@@ -103,9 +83,9 @@ const AboutSection = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
             {[
               { number: "500+", label: "Students" },
-              { number: "4+", label: "Active Clubs" }, // Updated from 6+ to 4+ to reflect removed clubs
-              { number: "50+", label: "Faculty Members" },
-              { number: "100+", label: "Projects/Year" },
+              { number: "4", label: "Active Clubs" }, // Updated from 6+ to 4+ to reflect removed clubs
+              { number: "20+", label: "Faculty Members" },
+              { number: "50+", label: "Projects/Year" },
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
