@@ -1,11 +1,8 @@
-import { createClient } from '@supabase/supabase-js'
+// Re-export the supabase client from the integration
+export { supabase } from '@/integrations/supabase/client'
+export type { Database } from '@/integrations/supabase/types'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://placeholder.supabase.co'
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'placeholder-key'
-
-export const supabase = createClient(supabaseUrl, supabaseKey)
-
-// Database Types
+// Database Types for backward compatibility
 export interface Event {
   id: string
   name: string

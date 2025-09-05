@@ -58,14 +58,12 @@ const Navbar = () => {
             })}
           </div>
 
-          {/* Admin Button */}
-          <motion.div whileHover={{ scale: 1.05 }}>
-            <Link to="/admin">
-              <Button variant="outline">
-                Admin Panel
-              </Button>
-            </Link>
-          </motion.div>
+          {/* Mobile Menu Button - Hidden on Desktop */}
+          <div className="md:hidden">
+            <Button variant="ghost" size="sm">
+              <FiSettings className="w-4 h-4" />
+            </Button>
+          </div>
         </div>
       </div>
     </motion.nav>

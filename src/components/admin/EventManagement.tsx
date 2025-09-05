@@ -8,7 +8,8 @@ import { Textarea } from '@/components/ui/textarea'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Badge } from '@/components/ui/badge'
 import { useToast } from '@/hooks/use-toast'
-import { supabase, Event } from '@/lib/supabase'
+import { supabase } from '@/integrations/supabase/client'
+import { Event } from '@/lib/supabase'
 import { FiPlus, FiEdit2, FiTrash2, FiUsers, FiCalendar } from 'react-icons/fi'
 
 interface EventManagementProps {

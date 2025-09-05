@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { supabase, Event } from '@/lib/supabase'
+import { supabase } from '@/integrations/supabase/client'
+import { Event } from '@/lib/supabase'
 import EventCard from './EventCard'
 import RegistrationModal from './RegistrationModal'
 import { useToast } from '@/hooks/use-toast'

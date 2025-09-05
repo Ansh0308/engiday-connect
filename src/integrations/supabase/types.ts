@@ -14,13 +14,122 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      admins: {
+        Row: {
+          created_at: string
+          id: string
+          password_hash: string
+          username: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          password_hash: string
+          username: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          password_hash?: string
+          username?: string
+        }
+        Relationships: []
+      }
+      events: {
+        Row: {
+          club_name: string
+          created_at: string
+          description: string | null
+          id: string
+          max_team_size: number
+          min_team_size: number
+          name: string
+          poster_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          club_name: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          max_team_size?: number
+          min_team_size?: number
+          name: string
+          poster_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          club_name?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          max_team_size?: number
+          min_team_size?: number
+          name?: string
+          poster_url?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      registrations: {
+        Row: {
+          created_at: string
+          event_id: string
+          id: string
+          team_leader_department: string
+          team_leader_email: string
+          team_leader_enrollment: string
+          team_leader_name: string
+          team_leader_program: string
+          team_leader_semester: number
+          team_members: Json | null
+          verified: boolean | null
+        }
+        Insert: {
+          created_at?: string
+          event_id: string
+          id?: string
+          team_leader_department: string
+          team_leader_email: string
+          team_leader_enrollment: string
+          team_leader_name: string
+          team_leader_program: string
+          team_leader_semester: number
+          team_members?: Json | null
+          verified?: boolean | null
+        }
+        Update: {
+          created_at?: string
+          event_id?: string
+          id?: string
+          team_leader_department?: string
+          team_leader_email?: string
+          team_leader_enrollment?: string
+          team_leader_name?: string
+          team_leader_program?: string
+          team_leader_semester?: number
+          team_members?: Json | null
+          verified?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "registrations_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      verify_admin_credentials: {
+        Args: { p_password: string; p_username: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never

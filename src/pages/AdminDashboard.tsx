@@ -6,7 +6,25 @@ import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
 import { useToast } from '@/hooks/use-toast'
-import { supabase, Event, Registration } from '@/lib/supabase'
+import { supabase } from '@/integrations/supabase/client'
+import type { Database } from '@/integrations/supabase/types'
+
+type Event = Database['public']['Tables']['events']['Row']
+type RegistrationRow = Database['public']['Tables']['registrations']['Row']
+
+interface TeamMember {
+  name: string
+  enrollment: string
+  email: string
+  department: string
+  program: string
+  semester: number
+  verified: boolean
+}
+
+interface Registration extends Omit<RegistrationRow, 'team_members'> {
+  team_members: TeamMember[]
+}
 import EventManagement from '@/components/admin/EventManagement'
 import RegistrationManagement from '@/components/admin/RegistrationManagement'
 import { FiLogOut, FiCalendar, FiUsers, FiTrendingUp, FiSettings } from 'react-icons/fi'
@@ -40,7 +58,14 @@ const AdminDashboard = () => {
       if (registrationsResponse.error) throw registrationsResponse.error
 
       setEvents(eventsResponse.data || [])
-      setRegistrations(registrationsResponse.data || [])
+      // Transform team_members from JSON to TeamMember[]
+      const transformedRegistrations = (registrationsResponse.data || []).map(reg => ({
+        ...reg,
+        team_members: Array.isArray(reg.team_members) 
+          ? (reg.team_members as unknown as TeamMember[]) 
+          : []
+      }))
+      setRegistrations(transformedRegistrations)
     } catch (error) {
       toast({
         title: "Error",

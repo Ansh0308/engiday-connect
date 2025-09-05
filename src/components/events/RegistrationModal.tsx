@@ -8,7 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { useToast } from '@/hooks/use-toast'
-import { supabase, Event, TeamMember } from '@/lib/supabase'
+import { supabase } from '@/integrations/supabase/client'
+import { Event, TeamMember } from '@/lib/supabase'
 import { FiPlus, FiTrash2, FiUsers, FiMail } from 'react-icons/fi'
 
 interface RegistrationModalProps {
@@ -151,7 +152,7 @@ const RegistrationModal = ({ event, isOpen, onClose }: RegistrationModalProps) =
         team_leader_department: teamLeader.department,
         team_leader_program: teamLeader.program,
         team_leader_semester: teamLeader.semester,
-        team_members: teamMembers,
+        team_members: teamMembers as any,
         verified: !isTeamEvent // Individual registrations are auto-verified
       }
 
