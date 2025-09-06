@@ -27,6 +27,7 @@ interface Registration extends Omit<RegistrationRow, 'team_members'> {
 }
 import EventManagement from '@/components/admin/EventManagement'
 import RegistrationManagement from '@/components/admin/RegistrationManagement'
+import { ExcelUpload } from '@/components/admin/ExcelUpload'
 import { FiLogOut, FiCalendar, FiUsers, FiTrendingUp, FiSettings } from 'react-icons/fi'
 
 const AdminDashboard = () => {
@@ -204,7 +205,11 @@ const AdminDashboard = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <Tabs defaultValue="events" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="students" className="flex items-center space-x-2">
+                <FiUsers className="w-4 h-4" />
+                <span>Student Data</span>
+              </TabsTrigger>
               <TabsTrigger value="events" className="flex items-center space-x-2">
                 <FiCalendar className="w-4 h-4" />
                 <span>Event Management</span>
@@ -215,12 +220,16 @@ const AdminDashboard = () => {
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="events">
-              <EventManagement 
-                events={events} 
-                onEventsUpdate={fetchData}
-              />
-            </TabsContent>
+          <TabsContent value="students">
+            <ExcelUpload onUploadComplete={fetchData} />
+          </TabsContent>
+          
+          <TabsContent value="events">
+            <EventManagement 
+              events={events} 
+              onEventsUpdate={fetchData}
+            />
+          </TabsContent>
 
             <TabsContent value="registrations">
               <RegistrationManagement 

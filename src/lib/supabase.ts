@@ -24,8 +24,12 @@ export interface Registration {
   team_leader_department: string
   team_leader_program: string
   team_leader_semester: number
+  team_leader_gr?: string
+  team_member_grs?: string[]
   team_members: TeamMember[]
   verified: boolean
+  otp_verified?: boolean
+  registration_status?: string
   created_at: string
 }
 

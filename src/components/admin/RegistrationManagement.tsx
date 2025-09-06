@@ -30,12 +30,14 @@ const RegistrationManagement = ({ registrations, events, onRegistrationsUpdate }
       registration.team_leader_enrollment.toLowerCase().includes(searchTerm.toLowerCase())
 
     const matchesEvent = filterEvent === 'all' || registration.event_id === filterEvent
-
+    
+    // Only show confirmed registrations (OTP verified)
+    const isConfirmed = registration.registration_status === 'confirmed' || registration.otp_verified
     const matchesStatus = filterStatus === 'all' || 
-      (filterStatus === 'verified' && registration.verified) ||
-      (filterStatus === 'pending' && !registration.verified)
+      (filterStatus === 'verified' && isConfirmed) ||
+      (filterStatus === 'pending' && !isConfirmed)
 
-    return matchesSearch && matchesEvent && matchesStatus
+    return matchesSearch && matchesEvent && matchesStatus && isConfirmed
   })
 
   // Group registrations by event

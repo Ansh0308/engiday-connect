@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { supabase } from '@/integrations/supabase/client'
 import { Event } from '@/lib/supabase'
 import EventCard from './EventCard'
-import RegistrationModal from './RegistrationModal'
+import { GRRegistrationModal } from './GRRegistrationModal'
 import { useToast } from '@/hooks/use-toast'
 
 const EventsSection = () => {
@@ -116,7 +116,7 @@ const EventsSection = () => {
 
       {/* Registration Modal */}
       {selectedEvent && (
-        <RegistrationModal
+        <GRRegistrationModal
           event={selectedEvent}
           isOpen={!!selectedEvent}
           onClose={closeModal}
