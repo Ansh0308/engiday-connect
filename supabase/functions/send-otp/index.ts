@@ -3,7 +3,7 @@ import { Resend } from "npm:resend@2.0.0"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.0"
 import { Deno } from "https://deno.land/std@0.190.0/runtime.ts" // Declaring Deno variable
 
-const resend = new Resend(Deno.env.get("re_gA3RB8Y6_GEDVXyFrpmjCzUmjrvEC1tsTre_gA3RB8Y6_GEDVXyFrpmjCzUmjrvEC1tsT"))
+const resend = new Resend(Deno.env.get("re_gA3RB8Y6_GEDVXyFrpmjCzUmjrvEC1tsT"))
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
