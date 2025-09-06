@@ -71,44 +71,95 @@ export type Database = {
         }
         Relationships: []
       }
-      registrations: {
+      otp_verifications: {
         Row: {
           created_at: string
-          event_id: string
+          expires_at: string
+          gr_number: string
           id: string
-          team_leader_department: string
-          team_leader_email: string
-          team_leader_enrollment: string
-          team_leader_name: string
-          team_leader_program: string
-          team_leader_semester: number
-          team_members: Json | null
+          otp_code: string
+          registration_id: string
           verified: boolean | null
         }
         Insert: {
           created_at?: string
-          event_id: string
+          expires_at?: string
+          gr_number: string
           id?: string
-          team_leader_department: string
-          team_leader_email: string
-          team_leader_enrollment: string
-          team_leader_name: string
-          team_leader_program: string
-          team_leader_semester: number
-          team_members?: Json | null
+          otp_code: string
+          registration_id: string
           verified?: boolean | null
         }
         Update: {
           created_at?: string
+          expires_at?: string
+          gr_number?: string
+          id?: string
+          otp_code?: string
+          registration_id?: string
+          verified?: boolean | null
+        }
+        Relationships: []
+      }
+      registrations: {
+        Row: {
+          all_members_verified: boolean | null
+          created_at: string
+          event_id: string
+          id: string
+          otp_verified: boolean | null
+          registration_status: string | null
+          team_leader_department: string
+          team_leader_email: string
+          team_leader_enrollment: string
+          team_leader_gr: string | null
+          team_leader_name: string
+          team_leader_program: string
+          team_leader_semester: number
+          team_leader_verified: boolean | null
+          team_member_grs: string[] | null
+          team_members: Json | null
+          verification_status: string | null
+          verified: boolean | null
+        }
+        Insert: {
+          all_members_verified?: boolean | null
+          created_at?: string
+          event_id: string
+          id?: string
+          otp_verified?: boolean | null
+          registration_status?: string | null
+          team_leader_department: string
+          team_leader_email: string
+          team_leader_enrollment: string
+          team_leader_gr?: string | null
+          team_leader_name: string
+          team_leader_program: string
+          team_leader_semester: number
+          team_leader_verified?: boolean | null
+          team_member_grs?: string[] | null
+          team_members?: Json | null
+          verification_status?: string | null
+          verified?: boolean | null
+        }
+        Update: {
+          all_members_verified?: boolean | null
+          created_at?: string
           event_id?: string
           id?: string
+          otp_verified?: boolean | null
+          registration_status?: string | null
           team_leader_department?: string
           team_leader_email?: string
           team_leader_enrollment?: string
+          team_leader_gr?: string | null
           team_leader_name?: string
           team_leader_program?: string
           team_leader_semester?: number
+          team_leader_verified?: boolean | null
+          team_member_grs?: string[] | null
           team_members?: Json | null
+          verification_status?: string | null
           verified?: boolean | null
         }
         Relationships: [
@@ -121,11 +172,86 @@ export type Database = {
           },
         ]
       }
+      students: {
+        Row: {
+          class: string
+          created_at: string
+          email: string
+          gr_number: string
+          name: string
+          semester: number
+          updated_at: string
+        }
+        Insert: {
+          class: string
+          created_at?: string
+          email: string
+          gr_number: string
+          name: string
+          semester: number
+          updated_at?: string
+        }
+        Update: {
+          class?: string
+          created_at?: string
+          email?: string
+          gr_number?: string
+          name?: string
+          semester?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      verification_tokens: {
+        Row: {
+          created_at: string | null
+          email: string
+          expires_at: string | null
+          id: string
+          registration_id: string | null
+          token: string
+          verified: boolean | null
+          verified_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          expires_at?: string | null
+          id?: string
+          registration_id?: string | null
+          token: string
+          verified?: boolean | null
+          verified_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          expires_at?: string | null
+          id?: string
+          registration_id?: string | null
+          token?: string
+          verified?: boolean | null
+          verified_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "verification_tokens_registration_id_fkey"
+            columns: ["registration_id"]
+            isOneToOne: false
+            referencedRelation: "registrations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      check_all_members_verified: {
+        Args: { reg_id: string }
+        Returns: boolean
+      }
       verify_admin_credentials: {
         Args: { p_password: string; p_username: string }
         Returns: boolean
