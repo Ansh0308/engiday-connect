@@ -38,10 +38,6 @@ This website serves as the central hub for the ICT Department's Engineer's Day f
 - **Routing**: React Router v6
 - **Icons**: Lucide React
 
-### Installation
-
-\`\`\`bash
-
 # Clone the repository
 
 git clone <https://github.com/Ansh0308/engiday-connect>
@@ -57,32 +53,14 @@ npm install
 # Start development server
 
 npm run dev
-\`\`\`
 
 ### Available Scripts
 
-\`\`\`bash
+bash
 npm run dev # Start development server
 npm run build # Build for production
 npm run preview # Preview production build
 npm run lint # Run ESLint
-\`\`\`
-
-## Project Structure
-
-\`\`\`
-src/
-├── components/
-│ ├── events/ # Event-related components
-│ ├── layout/ # Navigation and layout components
-│ └── sections/ # Page sections (About, Contact, etc.)
-├── data/
-│ └── clubsData.ts # Club information and data
-├── pages/
-│ ├── Index.tsx # Main homepage
-│ └── ClubDetail.tsx # Individual club pages
-└── App.tsx # Main application component
-\`\`\`
 
 ## Navigation
 
