@@ -44,6 +44,33 @@ const Navbar = () => {
             </div>
           </motion.div>
 
+          {/* Developer Credits - Hidden on small screens */}
+          <motion.div 
+            className="hidden lg:flex items-center space-x-3 px-4 py-2 bg-card/50 rounded-lg border border-border/50"
+            whileHover={{ scale: 1.02 }}
+          >
+            <img src="/images/CPclub.png" alt="CP Club" className="w-8 h-8 rounded-full" />
+            <div className="text-xs">
+              <p className="text-muted-foreground font-medium">Developed by</p>
+              <p className="text-foreground font-semibold">Competitive Programming Club</p>
+            </div>
+            <div className="h-8 w-px bg-border mx-2" />
+            <div className="text-xs space-y-0.5">
+              <div className="flex items-center space-x-2">
+                <span className="text-foreground font-medium">KAUSHAL PARMAR</span>
+                <span className="text-muted-foreground">Convener</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="text-foreground font-medium">PAYAL MAKWANA</span>
+                <span className="text-muted-foreground">Dy. Convener</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="text-foreground font-medium">ANSH RAYTHATHA</span>
+                <span className="text-muted-foreground">General Secretary</span>
+              </div>
+            </div>
+          </motion.div>
+
           {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => {
