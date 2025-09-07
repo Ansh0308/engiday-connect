@@ -1,73 +1,95 @@
-# Welcome to your Lovable project
+# Engineer's Day - ICT Department Website
+
+A modern, interactive website for the ICT Department's Engineer's Day celebration, featuring club information, events, and seamless navigation.
 
 ## Project info
 
 **URL**: https://lovable.dev/projects/6f7a5d9a-7341-4da9-b998-853e18d02b06
 
-## How can I edit this code?
+## Project Overview
 
-There are several ways of editing your application.
+This website serves as the central hub for the ICT Department's Engineer's Day festivities, showcasing various technical clubs, their activities, and upcoming events. The platform provides detailed information about each club including their vision, mission, core committee, and hosted events.
 
-**Use Lovable**
+## Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/6f7a5d9a-7341-4da9-b998-853e18d02b06) and start prompting.
+- **Smooth Navigation**: Seamless scrolling between sections (Events, About ICT, Contact)
+- **Interactive Club Cards**: Click on any club to view detailed information
+- **Club Detail Pages**: Comprehensive pages for each club featuring:
+  - Club Vision & Mission
+  - Core Committee Information
+  - Events hosted on Engineer's Day
+  - Contact details (Convener, Deputy Convener, Faculty)
+- **Responsive Design**: Optimized for all device sizes
+- **Modern UI**: Clean, professional interface with custom club logos
 
-Changes made via Lovable will be committed automatically to this repo.
+## Featured Clubs
 
-**Use your preferred IDE**
+1. **Competitive Programming Club** - Master algorithms, data structures, and problem-solving skills
+2. **Data Science Club** - Dive into AI, ML, and data analytics
+3. **Circuitology Club** - Explore hardware, circuits, and embedded systems
+4. **Cloud Computing and DevOps Club** - Learn cybersecurity and network technologies
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Technologies Used
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- **Frontend Framework**: React 18 with TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui
+- **Routing**: React Router v6
+- **Icons**: Lucide React
 
-Follow these steps:
+### Installation
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+\`\`\`bash
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Clone the repository
 
-# Step 3: Install the necessary dependencies.
-npm i
+git clone <https://github.com/Ansh0308/engiday-connect>
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Navigate to project directory
+
+cd engidayconnect
+
+# Install dependencies
+
+npm install
+
+# Start development server
+
 npm run dev
-```
+\`\`\`
 
-**Edit a file directly in GitHub**
+### Available Scripts
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+\`\`\`bash
+npm run dev # Start development server
+npm run build # Build for production
+npm run preview # Preview production build
+npm run lint # Run ESLint
+\`\`\`
 
-**Use GitHub Codespaces**
+## Project Structure
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+\`\`\`
+src/
+├── components/
+│ ├── events/ # Event-related components
+│ ├── layout/ # Navigation and layout components
+│ └── sections/ # Page sections (About, Contact, etc.)
+├── data/
+│ └── clubsData.ts # Club information and data
+├── pages/
+│ ├── Index.tsx # Main homepage
+│ └── ClubDetail.tsx # Individual club pages
+└── App.tsx # Main application component
+\`\`\`
 
-## What technologies are used for this project?
+## Navigation
 
-This project is built with:
+- **Home**: Main landing page with hero section
+- **Events**: Information about Engineer's Day events
+- **About ICT**: Details about the ICT Department and clubs
+- **Contact**: Department and club contact information
+- **Club Pages**: Individual pages accessible by clicking club cards
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/6f7a5d9a-7341-4da9-b998-853e18d02b06) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+**Developed by Competitive Programming Club, Marwadi University**
