@@ -1,6 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.0"
-import { Deno } from "https://deno.land/std@0.190.0/_util/deps.ts" // Declare Deno variable
 
 const SMTP_CONFIG = {
   hostname: "smtp.gmail.com",
