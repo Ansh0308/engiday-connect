@@ -19,110 +19,90 @@ interface SendOtpRequest {
   registrationId: string
 }
 
-async function sendEmailViaSMTP(to: string, subject: string, htmlContent: string, otpCode: string) {
-  console.log("[v0] Starting SMTP connection to Gmail...")
+async function sendEmailViaSMTP(to: string, subject: string, htmlContent: string, _otpCode: string) {
+  console.log("[smtp] Starting SMTP connection to Gmail...")
+
+  const encoder = new TextEncoder()
+  const decoder = new TextDecoder()
+
+  const readFrom = async (conn: Deno.Conn) => {
+    const buffer = new Uint8Array(4096)
+    const n = await conn.read(buffer)
+    const resp = decoder.decode(buffer.subarray(0, n || 0))
+    console.log("[smtp] <<", resp.trim())
+    return resp
+  }
+
+  const writeTo = async (conn: Deno.Conn, command: string) => {
+    console.log("[smtp] >>", command.trim())
+    await conn.write(encoder.encode(command))
+  }
+
+  const expect = (resp: string, expected: string, step: string) => {
+    if (!resp.includes(expected)) {
+      throw new Error(`${step} failed. Expected ${expected}, got: ${resp.replaceAll("\n", " ").trim()}`)
+    }
+  }
+
+  let conn: Deno.Conn | null = null
+  let tlsConn: Deno.Conn | null = null
 
   try {
-    const conn = await Deno.connect({
-      hostname: SMTP_CONFIG.hostname,
-      port: SMTP_CONFIG.port,
-    })
+    conn = await Deno.connect({ hostname: SMTP_CONFIG.hostname, port: SMTP_CONFIG.port })
+    await readFrom(conn) // greeting 220
 
-    console.log("[v0] Connected to Gmail SMTP server")
+    await writeTo(conn, "EHLO localhost\r\n")
+    expect(await readFrom(conn), "250", "EHLO")
 
-    const encoder = new TextEncoder()
-    const decoder = new TextDecoder()
+    await writeTo(conn, "STARTTLS\r\n")
+    expect(await readFrom(conn), "220", "STARTTLS")
 
-    // Helper function to read response
-    const readResponse = async () => {
-      const buffer = new Uint8Array(1024)
-      const n = await conn.read(buffer)
-      const response = decoder.decode(buffer.subarray(0, n || 0))
-      console.log("[v0] SMTP Response:", response.trim())
-      return response
-    }
+    tlsConn = await Deno.startTls(conn, { hostname: SMTP_CONFIG.hostname })
 
-    // Helper function to send command
-    const sendCommand = async (command: string) => {
-      console.log("[v0] SMTP Command:", command.trim())
-      await conn.write(encoder.encode(command))
-    }
+    await writeTo(tlsConn, "EHLO localhost\r\n")
+    expect(await readFrom(tlsConn), "250", "EHLO after TLS")
 
-    // Read initial greeting
-    await readResponse()
-
-    // Send EHLO
-    await sendCommand("EHLO localhost\r\n")
-    await readResponse()
-
-    // Start TLS
-    await sendCommand("STARTTLS\r\n")
-    await readResponse()
-
-    // Upgrade to TLS connection
-    const tlsConn = await Deno.startTls(conn, { hostname: SMTP_CONFIG.hostname })
-
-    // Send EHLO again after TLS
-    await tlsConn.write(encoder.encode("EHLO localhost\r\n"))
-    const buffer1 = new Uint8Array(1024)
-    const n1 = await tlsConn.read(buffer1)
-    console.log("[v0] TLS EHLO Response:", decoder.decode(buffer1.subarray(0, n1 || 0)).trim())
-
-    // Authenticate
     const authString = btoa(`\0${SMTP_CONFIG.username}\0${SMTP_CONFIG.password}`)
-    await tlsConn.write(encoder.encode(`AUTH PLAIN ${authString}\r\n`))
-    const buffer2 = new Uint8Array(1024)
-    const n2 = await tlsConn.read(buffer2)
-    const authResponse = decoder.decode(buffer2.subarray(0, n2 || 0))
-    console.log("[v0] Auth Response:", authResponse.trim())
+    await writeTo(tlsConn, `AUTH PLAIN ${authString}\r\n`)
+    expect(await readFrom(tlsConn), "235", "AUTH")
 
-    if (!authResponse.includes("235")) {
-      throw new Error(`Authentication failed: ${authResponse}`)
-    }
+    await writeTo(tlsConn, `MAIL FROM:<${SMTP_CONFIG.username}>\r\n`)
+    expect(await readFrom(tlsConn), "250", "MAIL FROM")
 
-    // Send MAIL FROM
-    await tlsConn.write(encoder.encode(`MAIL FROM:<${SMTP_CONFIG.username}>\r\n`))
-    const buffer3 = new Uint8Array(1024)
-    await tlsConn.read(buffer3)
+    await writeTo(tlsConn, `RCPT TO:<${to}>\r\n`)
+    expect(await readFrom(tlsConn), "250", "RCPT TO")
 
-    // Send RCPT TO
-    await tlsConn.write(encoder.encode(`RCPT TO:<${to}>\r\n`))
-    const buffer4 = new Uint8Array(1024)
-    const rcptResponse = await tlsConn.read(buffer4)
-    console.log("[v0] RCPT Response:", decoder.decode(buffer4.subarray(0, rcptResponse || 0)).trim())
+    await writeTo(tlsConn, "DATA\r\n")
+    expect(await readFrom(tlsConn), "354", "DATA")
 
-    // Send DATA
-    await tlsConn.write(encoder.encode("DATA\r\n"))
-    const buffer5 = new Uint8Array(1024)
-    await tlsConn.read(buffer5)
+    const now = new Date().toUTCString()
+    const message = `From: Engineer's Day ICT <${SMTP_CONFIG.username}>\r\n`
+      + `To: <${to}>\r\n`
+      + `Subject: ${subject}\r\n`
+      + `MIME-Version: 1.0\r\n`
+      + `Date: ${now}\r\n`
+      + `Content-Type: text/html; charset=UTF-8\r\n`
+      + `Content-Transfer-Encoding: 7bit\r\n\r\n`
+      + `${htmlContent}\r\n.\r\n`
 
-    // Send email content
-    const emailContent = `From: ${SMTP_CONFIG.username}
-To: ${to}
-Subject: ${subject}
-MIME-Version: 1.0
-Content-Type: text/html; charset=UTF-8
+    await writeTo(tlsConn, message)
+    const dataResp = await readFrom(tlsConn)
+    expect(dataResp, "250", "Sending message")
 
-${htmlContent}
-\r\n.\r\n`
+    await writeTo(tlsConn, "QUIT\r\n")
+    await readFrom(tlsConn) // 221
 
-    await tlsConn.write(encoder.encode(emailContent))
-    const buffer6 = new Uint8Array(1024)
-    const dataResponse = await tlsConn.read(buffer6)
-    console.log("[v0] Data Response:", decoder.decode(buffer6.subarray(0, dataResponse || 0)).trim())
-
-    // Send QUIT
-    await tlsConn.write(encoder.encode("QUIT\r\n"))
-
-    tlsConn.close()
-    console.log("[v0] Email sent successfully via raw SMTP")
-
+    console.log("[smtp] Email accepted by Gmail SMTP")
     return true
   } catch (error) {
-    console.error("[v0] SMTP Error:", error)
+    console.error("[smtp] Error while sending SMTP email:", error)
     throw error
+  } finally {
+    try { tlsConn?.close() } catch {}
+    try { conn?.close() } catch {}
   }
 }
+
 
 const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
