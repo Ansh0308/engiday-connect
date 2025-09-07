@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -15,6 +15,14 @@ const AdminLogin = () => {
   const navigate = useNavigate()
   const { toast } = useToast()
 
+  // Check if already logged in
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('admin_logged_in')
+    if (isLoggedIn === 'true') {
+      navigate('/admin/dashboard', { replace: true })
+    }
+  }, [navigate])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -27,7 +35,7 @@ const AdminLogin = () => {
           title: "Login Successful",
           description: "Welcome to the admin dashboard!",
         })
-        navigate('/admin/dashboard')
+        navigate('/admin/dashboard', { replace: true })
       } else {
         toast({
           title: "Invalid Credentials",
