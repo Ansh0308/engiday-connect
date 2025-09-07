@@ -91,7 +91,9 @@ const handler = async (req: Request): Promise<Response> => {
         .from('registrations')
         .update({ 
           otp_verified: true,
-          registration_status: 'confirmed'
+          verified: true,
+          registration_status: 'confirmed',
+          verification_status: 'verified'
         })
         .eq('id', registrationId);
 
