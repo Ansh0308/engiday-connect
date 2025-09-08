@@ -93,7 +93,7 @@ export default function EventFlipCard({ event, onRegister }: EventFlipCardProps)
         </Button>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .flip-card-container {
           width: 300px;
           height: 450px;

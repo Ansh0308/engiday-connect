@@ -6,6 +6,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { getClubById } from "@/data/clubsData"
+import { useState, useEffect } from "react"
+import { supabase } from "@/integrations/supabase/client"
+import { Event } from "@/lib/supabase"
 import {
   FiArrowLeft,
   FiMail,
@@ -22,8 +25,33 @@ import {
 const ClubDetail = () => {
   const { clubId } = useParams<{ clubId: string }>()
   const navigate = useNavigate()
+  const [events, setEvents] = useState<Event[]>([])
+  const [loading, setLoading] = useState(true)
 
   const club = clubId ? getClubById(clubId) : null
+
+  useEffect(() => {
+    if (club) {
+      fetchEvents()
+    }
+  }, [club])
+
+  const fetchEvents = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('events')
+        .select('*')
+        .eq('club_name', club!.name)
+        .order('created_at', { ascending: false })
+
+      if (error) throw error
+      setEvents(data || [])
+    } catch (error) {
+      console.error('Error fetching events:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   if (!club) {
     return (
@@ -168,55 +196,63 @@ const ClubDetail = () => {
                   <CardTitle className="text-2xl font-bold text-card-foreground">Engineer's Day Events</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-6">
-                    {club.events.map((event, index) => (
-                      <motion.div
-                        key={event.id}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5, delay: 0.1 * index }}
-                        className="border border-border/50 rounded-lg p-6 bg-background/50"
-                      >
-                        <div className="flex flex-col md:flex-row md:items-start space-y-4 md:space-y-0 md:space-x-6">
-                          {event.posterUrl && (
-                            <div className="w-full md:w-48 h-32 bg-muted rounded-lg overflow-hidden flex-shrink-0">
-                              <img
-                                src={event.posterUrl || "/placeholder.svg?height=128&width=192&query=Event Poster"}
-                                alt={event.name}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                          )}
-                          <div className="flex-1">
-                            <h3 className="text-xl font-semibold text-foreground mb-2">{event.name}</h3>
-                            <p className="text-muted-foreground mb-4">{event.description}</p>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                              <div className="flex items-center space-x-2 text-muted-foreground">
-                                <FiCalendar className="w-4 h-4" />
-                                <span>{new Date(event.date).toLocaleDateString()}</span>
+                  {loading ? (
+                    <div className="space-y-4">
+                      {[...Array(3)].map((_, i) => (
+                        <div key={i} className="h-32 bg-muted rounded-lg animate-pulse" />
+                      ))}
+                    </div>
+                  ) : events.length > 0 ? (
+                    <div className="space-y-6">
+                      {events.map((event, index) => (
+                        <motion.div
+                          key={event.id}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.5, delay: 0.1 * index }}
+                          className="border border-border/50 rounded-lg p-6 bg-background/50"
+                        >
+                          <div className="flex flex-col md:flex-row md:items-start space-y-4 md:space-y-0 md:space-x-6">
+                            {event.poster_url && (
+                              <div className="w-full md:w-48 h-32 bg-muted rounded-lg overflow-hidden flex-shrink-0">
+                                <img
+                                  src={event.poster_url || "/placeholder.svg?height=128&width=192&query=Event Poster"}
+                                  alt={event.name}
+                                  className="w-full h-full object-cover"
+                                />
                               </div>
-                              <div className="flex items-center space-x-2 text-muted-foreground">
-                                <FiClock className="w-4 h-4" />
-                                <span>{event.time}</span>
-                              </div>
-                              <div className="flex items-center space-x-2 text-muted-foreground">
-                                <FiMapPin className="w-4 h-4" />
-                                <span>{event.venue}</span>
-                              </div>
-                              <div className="flex items-center space-x-2 text-muted-foreground">
-                                <FiUsers className="w-4 h-4" />
-                                <span>
-                                  {event.minTeamSize === event.maxTeamSize
-                                    ? `${event.minTeamSize} member${event.minTeamSize > 1 ? "s" : ""}`
-                                    : `${event.minTeamSize}-${event.maxTeamSize} members`}
-                                </span>
+                            )}
+                            <div className="flex-1">
+                              <h3 className="text-xl font-semibold text-foreground mb-2">{event.name}</h3>
+                              <p className="text-muted-foreground mb-4">{event.description}</p>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                                <div className="flex items-center space-x-2 text-muted-foreground">
+                                  <FiCalendar className="w-4 h-4" />
+                                  <span>{new Date(event.created_at).toLocaleDateString()}</span>
+                                </div>
+                                <div className="flex items-center space-x-2 text-muted-foreground">
+                                  <FiMapPin className="w-4 h-4" />
+                                  <span>{event.club_name}</span>
+                                </div>
+                                <div className="flex items-center space-x-2 text-muted-foreground">
+                                  <FiUsers className="w-4 h-4" />
+                                  <span>
+                                    {event.min_team_size === event.max_team_size
+                                      ? `${event.min_team_size} member${event.min_team_size > 1 ? "s" : ""}`
+                                      : `${event.min_team_size}-${event.max_team_size} members`}
+                                  </span>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-8">
+                      <p className="text-muted-foreground">No events found for this club yet.</p>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </motion.div>
@@ -277,7 +313,7 @@ const ClubDetail = () => {
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
                       <span className="text-muted-foreground">Events</span>
-                      <span className="font-semibold text-foreground">{club.events.length}</span>
+                      <span className="font-semibold text-foreground">{events.length}</span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-muted-foreground">Committee Members</span>
