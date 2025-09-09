@@ -36,9 +36,9 @@ export default function EventFlipCard({ event, onRegister }: EventFlipCardProps)
           <div className="flip-card-front">
             <div className="event-poster">
               <img
-                src={event.poster_url || "/placeholder.svg?height=128&width=300&query=event poster"}
+                src={event.poster_url || "/placeholder.svg?height=192&width=350&query=event poster"}
                 alt={event.name}
-                className="w-full h-32 object-cover rounded-t-lg"
+                className="w-full h-48 object-cover rounded-t-lg"
               />
             </div>
             <div className="p-4 flex flex-col justify-between flex-1">
@@ -95,8 +95,9 @@ export default function EventFlipCard({ event, onRegister }: EventFlipCardProps)
 
       <style>{`
         .flip-card-container {
-          width: 300px;
-          height: 450px;
+          /* Increased card width from 300px to 350px and height from 450px to 520px */
+          width: 350px;
+          height: 520px;
           position: relative;
           font-family: inherit;
         }
@@ -104,7 +105,8 @@ export default function EventFlipCard({ event, onRegister }: EventFlipCardProps)
         .flip-card {
           background-color: transparent;
           width: 100%;
-          height: 400px;
+          /* Increased flip card height from 400px to 470px to accommodate larger poster */
+          height: 470px;
           perspective: 1000px;
         }
 
