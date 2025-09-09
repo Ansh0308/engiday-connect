@@ -36,21 +36,21 @@ export default function EventFlipCard({ event, onRegister }: EventFlipCardProps)
           <div className="flip-card-front">
             <div className="event-poster">
               <img
-                src={event.poster_url || "/placeholder.svg?height=192&width=350&query=event poster"}
+                src={event.poster_url || "/placeholder.svg?height=240&width=350&query=event poster"}
                 alt={event.name}
-                className="w-full h-48 object-cover rounded-t-lg"
+                className="w-full h-60 object-cover rounded-t-lg"
               />
             </div>
-            <div className="p-4 flex flex-col justify-between flex-1">
+            <div className="p-3 flex flex-col justify-between flex-1">
               <div>
-                <h3 className="font-bold text-lg mb-2 text-gray-800 line-clamp-2">{event.name}</h3>
-                <div className="mb-3">
+                <h3 className="font-bold text-lg mb-1 text-gray-800 line-clamp-2">{event.name}</h3>
+                <div className="mb-2">
                   <Badge variant="secondary" className="w-fit">
                     <FiMapPin className="w-3 h-3 mr-1" />
                     {event.club_name}
                   </Badge>
                 </div>
-                <div className="flex items-center text-gray-600 text-sm mb-4">
+                <div className="flex items-center text-gray-600 text-sm mb-3">
                   <FiUsers className="w-4 h-4 mr-1" />
                   <span>{teamSizeDisplay}</span>
                 </div>
