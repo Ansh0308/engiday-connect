@@ -22,7 +22,7 @@ export default function EventFlipCard({ event, onRegister }: EventFlipCardProps)
 
   return (
     <motion.div
-      whileHover={{ y: -8, scale: 1.02 }}
+      whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -106,6 +106,7 @@ export default function EventFlipCard({ event, onRegister }: EventFlipCardProps)
           height: 520px;
           position: relative;
           font-family: inherit;
+          transform-origin: center center;
         }
 
         .flip-card {
@@ -113,6 +114,7 @@ export default function EventFlipCard({ event, onRegister }: EventFlipCardProps)
           width: 100%;
           height: 470px;
           perspective: 1000px;
+          transform-origin: center center;
         }
 
         .flip-card-inner {
@@ -122,10 +124,7 @@ export default function EventFlipCard({ event, onRegister }: EventFlipCardProps)
           text-align: left;
           transition: transform 0.8s;
           transform-style: preserve-3d;
-        }
-
-        .flip-card-inner.flipped {
-          transform: rotateY(180deg);
+          transform-origin: center center;
         }
 
         .flip-card-front, .flip-card-back {
