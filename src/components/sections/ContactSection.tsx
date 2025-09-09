@@ -1,33 +1,23 @@
-import { motion } from 'framer-motion'
-import { Card, CardContent } from '@/components/ui/card'
-import { FiMail, FiPhone, FiMapPin, FiGlobe } from 'react-icons/fi'
+"use client"
+
+import { motion } from "framer-motion"
+import { Card, CardContent } from "@/components/ui/card"
+import { FiMapPin, FiGlobe } from "react-icons/fi"
 
 const ContactSection = () => {
   const contactInfo = [
     {
-      icon: FiMail,
-      title: 'Email',
-      content: 'ict@marwadiuniversity.ac.in',
-      link: 'mailto:ict@marwadiuniversity.ac.in'
-    },
-    {
-      icon: FiPhone,
-      title: 'Phone',
-      content: '+91 2826 247 017',
-      link: 'tel:+912826247017'
-    },
-    {
       icon: FiMapPin,
-      title: 'Address',
-      content: 'ICT Department, Marwadi University, Rajkot, Gujarat, India',
-      link: 'https://maps.google.com/?q=Marwadi+University+Rajkot'
+      title: "Address",
+      content: "ICT Department, Marwadi University, Rajkot, Gujarat, India",
+      link: "https://maps.google.com/?q=Marwadi+University+Rajkot",
     },
     {
       icon: FiGlobe,
-      title: 'Website',
-      content: 'www.marwadiuniversity.ac.in',
-      link: 'https://www.marwadiuniversity.ac.in'
-    }
+      title: "Website",
+      content: "www.marwadiuniversity.ac.in",
+      link: "https://www.marwadiuniversity.ac.in",
+    },
   ]
 
   return (
@@ -41,12 +31,10 @@ const ContactSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Get in Touch
-          </h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Get in Touch</h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Have questions about Engineer's Day events? Need more information? 
-            Contact the ICT Department at Marwadi University.
+            Have questions about Engineer's Day events? Need more information? Contact the ICT Department at Marwadi
+            University.
           </p>
         </motion.div>
 
@@ -67,8 +55,8 @@ const ContactSection = () => {
                   <CardContent className="p-6">
                     <a
                       href={item.link}
-                      target={item.link.startsWith('http') ? '_blank' : undefined}
-                      rel={item.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      target={item.link.startsWith("http") ? "_blank" : undefined}
+                      rel={item.link.startsWith("http") ? "noopener noreferrer" : undefined}
                       className="flex items-center space-x-4 group"
                     >
                       <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center flex-shrink-0">
@@ -78,9 +66,7 @@ const ContactSection = () => {
                         <h3 className="font-semibold text-card-foreground mb-1 group-hover:text-primary transition-colors">
                           {item.title}
                         </h3>
-                        <p className="text-muted-foreground text-sm break-words">
-                          {item.content}
-                        </p>
+                        <p className="text-muted-foreground text-sm break-words">{item.content}</p>
                       </div>
                     </a>
                   </CardContent>
@@ -101,13 +87,10 @@ const ContactSection = () => {
           <Card className="max-w-2xl mx-auto bg-gradient-card backdrop-blur-sm border border-border/50">
             <CardContent className="p-8">
               <div className="space-y-4">
-                <h3 className="text-2xl font-bold text-card-foreground">
-                  Marwadi University
-                </h3>
+                <h3 className="text-2xl font-bold text-card-foreground">Marwadi University</h3>
                 <p className="text-muted-foreground">
-                  A leading educational institution committed to excellence in engineering, 
-                  technology, and innovation. Join us in celebrating the spirit of engineering 
-                  and technological advancement.
+                  A leading educational institution committed to excellence in engineering, technology, and innovation.
+                  Join us in celebrating the spirit of engineering and technological advancement.
                 </p>
                 <div className="flex justify-center space-x-4 pt-4">
                   <motion.a
