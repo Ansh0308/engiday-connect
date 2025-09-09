@@ -143,6 +143,8 @@ export default function EventFlipCard({ event, onRegister }: EventFlipCardProps)
           border: 1px solid #e5e7eb;
           border-radius: 0.75rem;
           overflow: hidden;
+          top: 0;
+          left: 0;
         }
 
         .flip-card-front {
