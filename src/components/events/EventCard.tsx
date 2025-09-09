@@ -127,6 +127,10 @@ export default function EventFlipCard({ event, onRegister }: EventFlipCardProps)
           transform-origin: center center;
         }
 
+        .flip-card-inner.flipped {
+          transform: rotateY(180deg);
+        }
+
         .flip-card-front, .flip-card-back {
           box-shadow: 0 8px 14px 0 rgba(0,0,0,0.2);
           position: absolute;
