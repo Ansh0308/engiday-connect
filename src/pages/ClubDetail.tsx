@@ -225,10 +225,7 @@ const ClubDetail = () => {
                               <h3 className="text-xl font-semibold text-foreground mb-2">{event.name}</h3>
                               <p className="text-muted-foreground mb-4">{event.description}</p>
                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                                <div className="flex items-center space-x-2 text-muted-foreground">
-                                  <FiCalendar className="w-4 h-4" />
-                                  <span>{new Date(event.created_at).toLocaleDateString()}</span>
-                                </div>
+                                
                                 <div className="flex items-center space-x-2 text-muted-foreground">
                                   <FiMapPin className="w-4 h-4" />
                                   <span>{event.club_name}</span>
