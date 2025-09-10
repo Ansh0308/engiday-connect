@@ -6,8 +6,10 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { FiUsers, FiCalendar, FiMapPin, FiArrowLeft, FiClock } from "react-icons/fi"
-import { supabase } from "@/lib/supabase"
-import type { Event } from "@/lib/supabase"
+import { supabase } from "@/integrations/supabase/client"
+import type { Database } from "@/integrations/supabase/types"
+
+type Event = Database["public"]["Tables"]["events"]["Row"]
 
 export default function EventDetailsPage() {
   const params = useParams()
