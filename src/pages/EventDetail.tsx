@@ -97,14 +97,7 @@ const EventDetail: React.FC = () => {
               </div>
             </div>
 
-            
-
-              
-
-              
-
-             
-            </div>
+           
 
            
           </div>
