@@ -78,7 +78,7 @@ const EventDetail: React.FC = () => {
           </div>
 
           {/* Event Image */}
-          {event.image_url && (
+          {event.poster_url && (
             <div className="w-full max-w-2xl mx-auto">
               <img
                 src={event.poster_url || "/placeholder.svg"}
@@ -102,5 +102,16 @@ const EventDetail: React.FC = () => {
               
 
               
+
+             
+            </div>
+
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export default EventDetail
