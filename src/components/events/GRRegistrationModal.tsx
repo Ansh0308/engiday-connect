@@ -336,7 +336,7 @@ export function GRRegistrationModal({ event, isOpen, onClose }: GRRegistrationMo
           <div className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Team Leader</CardTitle>
+                <CardTitle>Team Leader/Individual</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
