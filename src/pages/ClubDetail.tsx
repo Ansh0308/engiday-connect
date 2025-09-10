@@ -9,17 +9,7 @@ import { getClubById } from "@/data/clubsData"
 import { useState, useEffect } from "react"
 import { supabase } from "@/integrations/supabase/client"
 import type { Event } from "@/lib/supabase"
-import {
-  FiArrowLeft,
-  FiMail,
-  FiPhone,
-  FiCalendar,
-  FiMapPin,
-  FiUsers,
-  FiInstagram,
-  FiLinkedin,
-  FiGithub,
-} from "react-icons/fi"
+import { FiArrowLeft, FiMail, FiPhone, FiMapPin, FiUsers, FiInstagram, FiLinkedin, FiGithub } from "react-icons/fi"
 
 const ClubDetail = () => {
   const { clubId } = useParams<{ clubId: string }>()
@@ -217,7 +207,7 @@ const ClubDetail = () => {
                                 <img
                                   src={event.poster_url || "/placeholder.svg?height=160&width=256&query=Event Poster"}
                                   alt={event.name}
-                                  className="w-full h-full object-cover"
+                                  className="w-full h-full object-contain"
                                 />
                               </div>
                             )}
@@ -225,7 +215,6 @@ const ClubDetail = () => {
                               <h3 className="text-xl font-semibold text-foreground mb-2">{event.name}</h3>
                               <p className="text-muted-foreground mb-4">{event.description}</p>
                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                                
                                 <div className="flex items-center space-x-2 text-muted-foreground">
                                   <FiMapPin className="w-4 h-4" />
                                   <span>{event.club_name}</span>
@@ -294,8 +283,6 @@ const ClubDetail = () => {
                 </CardContent>
               </Card>
             </motion.div>
-
-           
           </div>
         </div>
       </div>
