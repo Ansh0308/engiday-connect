@@ -36,7 +36,7 @@ const Footer = () => {
           {/* Copyright */}
           <div className="pt-6 border-t border-primary-foreground/20">
             <p className="text-primary-foreground/60 text-sm">
-              © 2025 ICT Department, Marwadi University. All rights reserved.
+              © 2025 Competitive Programming Club ICT Department, Marwadi University. All rights reserved.
             </p>
           </div>
         </motion.div>
