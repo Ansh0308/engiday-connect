@@ -8,14 +8,13 @@ import { Badge } from "@/components/ui/badge"
 import { getClubById } from "@/data/clubsData"
 import { useState, useEffect } from "react"
 import { supabase } from "@/integrations/supabase/client"
-import { Event } from "@/lib/supabase"
+import type { Event } from "@/lib/supabase"
 import {
   FiArrowLeft,
   FiMail,
   FiPhone,
   FiCalendar,
   FiMapPin,
-  FiClock,
   FiUsers,
   FiInstagram,
   FiLinkedin,
@@ -39,15 +38,15 @@ const ClubDetail = () => {
   const fetchEvents = async () => {
     try {
       const { data, error } = await supabase
-        .from('events')
-        .select('*')
-        .eq('club_name', club!.name)
-        .order('created_at', { ascending: false })
+        .from("events")
+        .select("*")
+        .eq("club_name", club!.name)
+        .order("created_at", { ascending: false })
 
       if (error) throw error
       setEvents(data || [])
     } catch (error) {
-      console.error('Error fetching events:', error)
+      console.error("Error fetching events:", error)
     } finally {
       setLoading(false)
     }
@@ -178,7 +177,7 @@ const ClubDetail = () => {
                         club.committeePosterUrl || "/placeholder.svg?height=400&width=600&query=Core Committee Poster"
                       }
                       alt={`${club.name} Core Committee`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                     />
                   </div>
                 </CardContent>
@@ -214,9 +213,9 @@ const ClubDetail = () => {
                         >
                           <div className="flex flex-col md:flex-row md:items-start space-y-4 md:space-y-0 md:space-x-6">
                             {event.poster_url && (
-                              <div className="w-full md:w-48 h-32 bg-muted rounded-lg overflow-hidden flex-shrink-0">
+                              <div className="w-full md:w-64 h-40 bg-muted rounded-lg overflow-hidden flex-shrink-0">
                                 <img
-                                  src={event.poster_url || "/placeholder.svg?height=128&width=192&query=Event Poster"}
+                                  src={event.poster_url || "/placeholder.svg?height=160&width=256&query=Event Poster"}
                                   alt={event.name}
                                   className="w-full h-full object-cover"
                                 />
@@ -226,7 +225,10 @@ const ClubDetail = () => {
                               <h3 className="text-xl font-semibold text-foreground mb-2">{event.name}</h3>
                               <p className="text-muted-foreground mb-4">{event.description}</p>
                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                                
+                                <div className="flex items-center space-x-2 text-muted-foreground">
+                                  <FiCalendar className="w-4 h-4" />
+                                  <span>{new Date(event.created_at).toLocaleDateString()}</span>
+                                </div>
                                 <div className="flex items-center space-x-2 text-muted-foreground">
                                   <FiMapPin className="w-4 h-4" />
                                   <span>{event.club_name}</span>
@@ -296,8 +298,7 @@ const ClubDetail = () => {
               </Card>
             </motion.div>
 
-            {/* Quick Stats */}
-            
+           
           </div>
         </div>
       </div>
