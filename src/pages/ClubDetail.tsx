@@ -226,10 +226,7 @@ const ClubDetail = () => {
                               <h3 className="text-xl font-semibold text-foreground mb-2">{event.name}</h3>
                               <p className="text-muted-foreground mb-4">{event.description}</p>
                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                                <div className="flex items-center space-x-2 text-muted-foreground">
-                                  <FiCalendar className="w-4 h-4" />
-                                  <span>{new Date(event.created_at).toLocaleDateString()}</span>
-                                </div>
+                                
                                 <div className="flex items-center space-x-2 text-muted-foreground">
                                   <FiMapPin className="w-4 h-4" />
                                   <span>{event.club_name}</span>
@@ -300,35 +297,7 @@ const ClubDetail = () => {
             </motion.div>
 
             {/* Quick Stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.0 }}
-            >
-              <Card className="bg-gradient-card backdrop-blur-sm border border-border/50">
-                <CardHeader>
-                  <CardTitle className="text-xl font-bold text-card-foreground">Quick Stats</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <span className="text-muted-foreground">Events</span>
-                      <span className="font-semibold text-foreground">{events.length}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-muted-foreground">Committee Members</span>
-                      <span className="font-semibold text-foreground">{club.contacts.length}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-muted-foreground">Social Platforms</span>
-                      <span className="font-semibold text-foreground">
-                        {club.socialMedia ? Object.keys(club.socialMedia).length : 0}
-                      </span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
+            
           </div>
         </div>
       </div>
