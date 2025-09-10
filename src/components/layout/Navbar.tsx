@@ -57,10 +57,6 @@ const Navbar = () => {
             <div className="h-8 w-px bg-border mx-2" />
             <div className="text-xs space-y-0.5">
               <div className="flex items-center space-x-2">
-                <span className="text-foreground font-medium">KAUSHAL PARMAR</span>
-                <span className="text-muted-foreground">Convener</span>
-              </div>
-              <div className="flex items-center space-x-2">
                 <span className="text-foreground font-medium">PAYAL MAKWANA</span>
                 <span className="text-muted-foreground">Dy. Convener</span>
               </div>
@@ -68,6 +64,7 @@ const Navbar = () => {
                 <span className="text-foreground font-medium">ANSH RAYTHATHA</span>
                 <span className="text-muted-foreground">General Secretary</span>
               </div>
+              
             </div>
           </motion.div>
 
