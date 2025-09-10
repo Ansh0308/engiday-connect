@@ -80,15 +80,7 @@ const EventDetail: React.FC = () => {
           </div>
 
           {/* Event Image */}
-          {event.poster_url && (
-            <div className="w-full max-w-2xl mx-auto">
-              <img
-                src={event.poster_url || "/placeholder.svg"}
-                alt={event.name}
-                className="w-full h-64 md:h-80 object-cover rounded-lg shadow-lg"
-              />
-            </div>
-          )}
+         
 
           <div className="space-y-6">
             <div>
