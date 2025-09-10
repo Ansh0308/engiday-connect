@@ -5,7 +5,9 @@ import { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { ArrowLeft } from "lucide-react"
 import { supabase } from "@/lib/supabase"
-import type { Event } from "@/integrations/supabase/types"
+import type { Tables } from "@/integrations/supabase/types"
+
+type Event = Tables<"events">
 
 const EventDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>()
@@ -88,7 +90,6 @@ const EventDetail: React.FC = () => {
             </div>
           )}
 
-          {/* Event Details */}
           <div className="space-y-6">
             <div>
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">Event Details</h2>
@@ -97,9 +98,16 @@ const EventDetail: React.FC = () => {
               </div>
             </div>
 
-           
-
-           
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-gray-200">
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-2">Team Size</h3>
+                <p className="text-gray-700">
+                  {event.min_team_size === event.max_team_size
+                    ? `${event.min_team_size} member${event.min_team_size > 1 ? "s" : ""}`
+                    : `${event.min_team_size} - ${event.max_team_size} members`}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
