@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { FiUsers, FiCalendar, FiMapPin, FiInfo } from "react-icons/fi"
-import { useRouter } from "next/navigation"
+import { useNavigate } from "react-router-dom"
 import type { Event } from "@/lib/supabase"
 
 interface EventFlipCardProps {
@@ -13,7 +13,7 @@ interface EventFlipCardProps {
 }
 
 export default function EventFlipCard({ event, onRegister }: EventFlipCardProps) {
-  const router = useRouter()
+  const navigate = useNavigate()
 
   const teamSizeDisplay =
     event.min_team_size === event.max_team_size
@@ -21,7 +21,7 @@ export default function EventFlipCard({ event, onRegister }: EventFlipCardProps)
       : `${event.min_team_size}-${event.max_team_size} members`
 
   const handleViewDetails = () => {
-    router.push(`/events/${event.id}`)
+    navigate(`/events/${event.id}`)
   }
 
   return (

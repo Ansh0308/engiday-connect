@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound"
 import AdminLogin from "./pages/AdminLogin"
 import AdminDashboard from "./pages/AdminDashboard"
 import ClubDetail from "./pages/ClubDetail"
+import EventDetail from "./pages/EventDetail"
 import ProtectedRoute from "./components/auth/ProtectedRoute"
 
 const queryClient = new QueryClient()
@@ -21,12 +22,16 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/admin" element={<AdminLogin />} />
-          <Route path="/admin/dashboard" element={
-            <ProtectedRoute>
-              <AdminDashboard />
-            </ProtectedRoute>
-          } />
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/clubs/:clubId" element={<ClubDetail />} />
+          <Route path="/events/:id" element={<EventDetail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
