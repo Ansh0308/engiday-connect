@@ -6,19 +6,48 @@ import { Badge } from "@/components/ui/badge"
 import { FiUsers, FiCalendar, FiMapPin, FiInfo } from "react-icons/fi"
 import { useNavigate } from "react-router-dom"
 import type { Event } from "@/lib/supabase"
+import { useState, useEffect } from "react"
+import { supabase } from "@/integrations/supabase/client"
 
 interface EventFlipCardProps {
-  event: Event
+  event: Event & { max_team_capacity?: number | null }
   onRegister: (event: Event) => void
 }
 
 export default function EventFlipCard({ event, onRegister }: EventFlipCardProps) {
   const navigate = useNavigate()
+  const [registeredTeamsCount, setRegisteredTeamsCount] = useState(0)
+  const [loading, setLoading] = useState(true)
 
   const teamSizeDisplay =
     event.min_team_size === event.max_team_size
       ? `${event.min_team_size} ${event.min_team_size === 1 ? "member" : "members"}`
       : `${event.min_team_size}-${event.max_team_size} members`
+
+  const availableCapacity = event.max_team_capacity ? event.max_team_capacity - registeredTeamsCount : null
+  const isCapacityFull = event.max_team_capacity ? registeredTeamsCount >= event.max_team_capacity : false
+
+  useEffect(() => {
+    const fetchRegisteredTeamsCount = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("registrations")
+          .select("id")
+          .eq("event_id", event.id)
+          .eq("verified", true)
+
+        if (error) throw error
+        setRegisteredTeamsCount(data?.length || 0)
+      } catch (error) {
+        console.error("Error fetching registered teams count:", error)
+        setRegisteredTeamsCount(0)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchRegisteredTeamsCount()
+  }, [event.id])
 
   const handleViewDetails = () => {
     navigate(`/events/${event.id}`)
@@ -55,10 +84,24 @@ export default function EventFlipCard({ event, onRegister }: EventFlipCardProps)
                   {event.club_name}
                 </Badge>
               </div>
-              <div className="flex items-center text-white/90 text-sm mb-4">
+              <div className="flex items-center text-white/90 text-sm mb-2">
                 <FiUsers className="w-4 h-4 mr-1" />
                 <span>{teamSizeDisplay}</span>
               </div>
+              {event.max_team_capacity && (
+                <div className="flex items-center text-white/90 text-sm mb-4">
+                  <FiCalendar className="w-4 h-4 mr-1" />
+                  <span>
+                    {loading
+                      ? "Loading..."
+                      : availableCapacity !== null
+                        ? availableCapacity > 0
+                          ? `${availableCapacity} spots available`
+                          : "Event Full"
+                        : "Unlimited capacity"}
+                  </span>
+                </div>
+              )}
             </div>
             <div>
               <Button
@@ -75,10 +118,21 @@ export default function EventFlipCard({ event, onRegister }: EventFlipCardProps)
       </div>
 
       <div className="register-button-container">
-        <Button onClick={() => onRegister(event)} className="w-full bg-blue-500 hover:bg-blue-600 text-white">
-          <FiCalendar className="w-4 h-4 mr-2" />
-          Register Now
-        </Button>
+        {!isCapacityFull ? (
+          <Button
+            onClick={() => onRegister(event)}
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white"
+            disabled={loading}
+          >
+            <FiCalendar className="w-4 h-4 mr-2" />
+            Register Now
+          </Button>
+        ) : (
+          <Button disabled className="w-full bg-gray-400 text-white cursor-not-allowed">
+            <FiUsers className="w-4 h-4 mr-2" />
+            Event Full
+          </Button>
+        )}
       </div>
 
       <style>{`
